@@ -1,0 +1,42 @@
+/*Write PL/SQL block of code which implements concept of trigger. Use following tables schema-
+1. library(bno ,bookname ,author ,alloweddays)
+2. library_aud(bno ,old_days ,new_days)*/
+
+1. LIBRARY table 
+Creating table library
+
+create table library(bno int,bookname varchar(20),author varchar(20),alloweddays int);
+Inserting record into table
+insert into library values(1,'toc','Rajeev Motwani',12);
+insert into library values(2,'toc','sanjeev arora',25);
+insert into library values(3,'dbms','s. sudarshab',2);
+insert into library values(4,'sepm','roger pressman',20);
+
+Retriving data from table
+select *from library;
+
+2. Creating table LIBRARY_AUD
+create table library_aud(bno int,old_days int,new_days int);
+
+3. Creating TRIGGER
+create or replace trigger tr1
+before update or delete on library
+for each row
+
+begin
+ insert into library_aud values(:new.bno,:old.alloweddays,:new.alloweddays);
+end;
+
+4. Performing Operations on Library table
+Updation Operation
+update library set alloweddays = 10 where bookname = 'dbms';
+Deletion Operation
+delete from library where alloweddays = 12;
+
+
+5. LIBRARY table After Performing Operations 
+select *from library;
+
+6. Records in LIBRARY_AUD table
+select *from library_aud;
+

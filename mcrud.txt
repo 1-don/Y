@@ -1,0 +1,51 @@
+//Study of Open Source NOSQL Database: MongoDB (Installation, Basic CRUD operations,Execution)
+
+> show dbs
+
+2.CREATING DATABASE IN MongoDB :-
+> use SA
+> show dbs
+> db.SA.insert({"Name":"MONGO DB start"})
+> show dbs
+
+
+3.DELETING DATABASE :-
+> db.dropDatabase();
+	
+4.CREATE COLLECTION IN MongoDB :-
+> db.createCollection("demo")
+> db.mongo1.insert({"prac":1,'name':'perform CRUD operations'})
+
+> show collections
+
+
+5.Drop collection =
+> db.mongo1.drop()
+> show collections
+
+
+6.INSERTING DOCUMENT INTO COLLECTION :-
+> db.DBMSL.insert({"PracNo":1,"Title":"Intro to SQL",'DBName':'sql'})
+> db.DBMSL.insert([{'PracNo':2,'Title':'DDL operations on table','DBName':'sql'},{'PracNo':3,'Name':'Create stored procedure and function','DBName':'Pl/SQL'}])
+
+> db.DBMSL.insert({"PracNo":4,"Title":"Intro to mongoDB",'DBName':'mongoDB'})
+
+
+7.RETRIVING DOCUMENT FROM COLLECTION :-
+> db.DBMSL.find()
+> db.DBMSL.find().pretty()
+> db.DBMSL.find({'DBName':'sql'}).pretty()
+> db.DBMSL.find({'PracNo':{$ne:2}}).pretty()
+> db.DBMSL.find({'PracNo':{$gte:2}}).pretty()
+
+8.UPDATING DOCUMENT :-
+> db.DBMSL.update({'Title':'DDL operations on table'},{$set:{'Title':'DDl opreations on table,index,view'}})
+> db.DBMSL.find().pretty()
+
+9.DELETE DOCUMENT :-
+> db.DBMSL.remove({'PracNo':4})
+> db.DBMSL.find().pretty()
+
+> db.DBMSL.remove({'DBName':'sql'},1)
+> db.DBMSL.find().pretty()
+

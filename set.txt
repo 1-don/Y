@@ -1,0 +1,129 @@
+/*Problem Statement :- Design at least 10 SQL queries for suitable database application using SQL DML statements:
+Insert, Select, Update, Delete with operators, functions, and set operator.*/
+
+
+> create database prac3;
+
+> create table Employee(
+Emp_no integer(3),
+Emp_name varchar(20),
+Joining_date date,
+Salary integer(6)
+);
+
+1.INSERTING RECORD INTO TABLE :-
+> insert into Employee values(101,'Rohan','1995-11-02',12000),(102,'Neha','1999-01-03',20000),		(103,'Swati','2015-05-07',30000),(104,'Mohan','2000-11-12',8900),(105,'Seema','1999-02-12',8000),(106,'Ankita','2012-12-12',25000);
+> select *from Employee;
+
+> insert into Employee(Emp_no,Emp_name,Joining_date) values(107,'Ankur','2017-03-15'),(108,'Madhav','2017-05-04');
+> select *from Employee;
+
+2.RETRIEVE DATA FROM TABLES :-
+> select Emp_no,Emp_name from Employee;
+
+> select *from Employee where Salary >8000;
+
+> select *from Employee where Emp_name='Swati';
+
+> select distinct(Salary) from Employee;
+
+> select *from Employee order by Joining_date;
+
+> select *from Employee order by Joining_date desc;
+
+3.MODIFY DATA IN TABLES :-
+> update Employee set Salary=50000 where Emp_no=108;
+> select *from Employee;
+> update Employee set Joining_date='2013-09-05' where Emp_no=105;
+> select *from Employee;
+
+4.REMOVE RECORDS FROM TABLES :-
+> delete from Employee where Emp_no=107;
+> select *from Employee;
+
+5.BETWEEN,IN,LIKE OPERATORS WITH SELECT STATEMENT :-
+5.1.BETWEEN 
+> select *from Employee where Salary between 10000 and 30000;
+
+> select *from Employee where Salary not between 10000 and 30000;
+
+5.2.IN
+> select *from Employee where Salary in(8000,20000);
+
+> select *from Employee where Salary not in(8000,20000);
+
+5.3.LIKE
+> select *from Employee where Emp_name like 'M%';
+
+> select *from Employee where Emp_name not like 'M%';
+
+6.AGGREGATE FUNCTIONS :-
+6.1.MIN() 
+> select *from Employee where Salary=(select min(Salary) from Employee);
+
+6.2.MAX()
+> select *from Employee where Salary=(select max(Salary) from Employee);
+	
+6.3.COUNT()
+> select count(*) from Employee where Joining_date like '2015%';
+
+6.4.LCASE()
+> select lcase(Emp_name) EmployeeName from Employee;
+
+6.5.UCASE()
+> select ucase(Emp_name) EmployeeName from Employee;
+
+7.SET OPERATORS :-
+
+> create table product_details(
+product_id int(4),
+product_name varchar(10),
+quantity int,
+price int
+);
+
+> insert into product_details values(1221,'pendrive',110,900);
+
+> insert into product_details values(1222,'harddisk',210,3900);
+
+> insert into product_details values(1223,'DVD',1100,1900);
+
+> insert into product_details values(1224,'speaker',600,1300);
+
+> insert into product_details values(1225,'mouse',900,1000);
+
+> insert into product_details values(1226,'keyboard',50,10000);
+
+> select *from product_details;
+
+
+> create table sales_details(
+sale_no int,
+product_id int(4),
+quantity int,
+price int(5),
+customer_name varchar(15)
+);
+
+> insert into sales_details values(2001,1224,20,25000,'vaishali'),(2002,1221,10,9000,'madav'),(2003,1222,9,35100,'kapil'),(2004,1226,2,20000,'vrushali');
+
+> insert into sales_details values(2005,1227,12,2300,'mansi'),(2006,1229,40,400000,'saurabh');
+
+> select *from sales_details;
+
+7.1.UNION 
+> select product_id from product_details 
+union
+select product_id from sales_details;
+
+7.2.UNION ALL 
+> select product_id from product_details  union all select product_id from sales_details;
+
+7.3. MINUS 
+> select product_id from product_details where (product_id) not in (select product_id from sales_details);
+
+> select distinct product_details.product_id as product_id  from product_details  LEFT OUTER JOIN sales_details using (product_id) where sales_details.product_id is null;
+
+7.4.INTERSECT 
+> select product_id from product_details where (product_id) in (select product_id from sales_details);
+

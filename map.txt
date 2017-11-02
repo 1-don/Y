@@ -1,0 +1,21 @@
+/*Problem Statement :- Implement Map reduces operation with suitable example using MongoDB.*/
+
+> use orders
+
+> db.order.insert([{"cust_id":"A123",'amount':500,'status':'A'},{"cust_id":"A123",'amount':250,'status':"A"},{'cust_id':'B221','amount':200,'status':'A'},{"cust_id":'A123','amount':300,'status':'D'}])
+> db.order.find().pretty()
+
+> db.order.mapReduce(function() { emit(this.cust_id,this.amount); },function(key,values){return Array.sum(values)},{query:{status:"A"},out:"order_totals"} )
+> db.order_totals.find()
+
+
+QUERY : > db.stud.insert([{'roll_no':1,'year':'first','marks':30},{'roll_no':2,'year':'first','marks':40},{'roll_no':3,'year':'first','marks':20},{'roll_no':2,'year':'first','marks':12},{'roll_no':3,'year':'second','marks':35},{'roll_no':2,'year':'second','marks':23}])
+
+> db.stud.find().pretty()
+
+> db.stud.mapReduce(function() { emit(this.roll_no,this.marks); },function(key,values){return Array.sum(values)},{query:{year:"first"},out:"marks_totals"} )
+	
+> db.marks_totals.find()
+
+
+

@@ -1,0 +1,87 @@
+/*Design a basic pl/sql block for library system.Use following tables schema-
+1. Borrower(Rollin, Name, DateofIssue, NameofBook, Status) 
+2. Fine(Roll_no,Date,Amt)*/
+
+1.Starting with Oracle :-
+localhost:8080/apex
+
+2. BORROWER Table:-
+Creating table:
+create table borrower(Roll_no int,Stud_name varchar(15),DateofIssue date,Bookname varchar(10),Status char(1));
+
+Inserting records:
+insert into borrower values(1,'Mahesh',to_date('12.06.2017','DD.MM.YYYY'),'TOC','R');
+insert into borrower values(2,'Suresh',to_date('12.07.2017','DD.MM.YYYY'),'DBMS','I');
+insert into borrower values(3,'Tina',to_date('11.07.2017','DD.MM.YYYY'),'DBMS','I');
+insert into borrower values(4,'Sakshi',to_date('20.06.2017','DD.MM.YYYY'),'SEPM','R');
+insert into borrower values(4,'Sakshi',to_date('20.06.2017','DD.MM.YYYY'),'CN','I');
+insert into borrower values(11,'Mina',to_date('11.07.2017','DD.MM.YYYY'),'TOC','I');
+insert into borrower values(21,'Anita',to_date('15.09.2017','DD.MM.YYYY'),'TOC','I');
+
+Displaying records of table:
+QUERY:    SELECT *FROM BORROWER;
+
+3.FINE Table :-
+Creating table :
+create table fine(Roll_no int,DateofReturn date,Amount numeric(7,2));
+
+Inserting records:
+INSERT INTO FINE VALUES(1,TO_DATE('30.06.2017','DD.MM.YYYY'),15);
+INSERT INTO FINE VALUES(4,TO_DATE('20.07.2017','DD.MM.YYYY'),1500);
+INSERT INTO FINE VALUES(2,TO_DATE('29.09.2017','DD.MM.YYYY'),4000);
+
+Displaying records of table :
+SELECT *FROM FINE;
+
+4. PL/SQL BLOCK:-
+DECLARE 
+   c_Rollno borrower.Roll_no%type := 11; 
+   c_name  borrower.Stud_Name%type; 
+   c_DOI borrower.DateOfIssue%type; 
+   c_book  borrower.BookName%type := 'TOC'; 
+   c_Status  borrower.Status%type; 
+   days int;
+   fine numeric(6,2);
+
+BEGIN 
+   SELECT Roll_no,Stud_name, DateOfIssue, BookName, Status, sysdate - DateOfIssue  INTO  c_Rollno ,c_name  ,c_DOI ,c_book  ,c_Status ,days
+   FROM borrower
+   WHERE Roll_no = c_Rollno and BookName = c_book ;  
+   dbms_output.put_line 
+   (c_Rollno  || '  ' || c_name || '  ' ||  c_DOI || '  ' || c_book || '   '  ||  c_Status); 
+
+   if days <= 15 then
+          dbms_output.put_line('Total_days=' || days);
+   elsif days > 15 and days <= 30 then
+        dbms_output.put_line('Total_days=' || days);
+        fine := days * 5;
+        if c_Status = 'I' then
+           insert into Fine(Roll_no, DateofReturn, Amount) values (c_Rollno, to_date(sysdate,'DD.MM.YYYY'),fine  );
+           dbms_output.put_line('fine =' || fine);
+           update Borrower set Status = 'R' WHERE Roll_no = c_Rollno and BookName = c_book;
+       else
+          dbms_output.put_line('Student having RollNo=' || c_Rollno || ' already return the book');
+       end if;
+   elsif days > 30 then
+       dbms_output.put_line('Total_days=' || days);
+       fine := days * 50;
+       if c_Status = 'I' then
+           dbms_output.put_line('fine =' || fine);
+           insert into Fine(Roll_no, DateofReturn, Amount) values (c_Rollno, to_date(sysdate,'DD.MM.YYYY'),fine  );
+           update Borrower set Status = 'R' WHERE Roll_no = c_Rollno and BookName = c_book;
+       else
+          dbms_output.put_line('Student having RollNo=' || c_Rollno || ' already return the book');
+       end if;
+
+   end if;
+
+    EXCEPTION 
+        WHEN no_data_found THEN
+             dbms_output.put_line('Record not found...........');
+END;
+OUTPUT:
+
+
+5. TABLES AFTER FIRING QUERY :-
+SELECT *FROM BORROWER;
+SELECT *FROM FINE;

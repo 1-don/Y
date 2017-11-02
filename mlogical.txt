@@ -1,0 +1,54 @@
+/*Problem Statement :-Design and Develop MongoDB Queries using CRUD operations. (Use CRUD operations,SAVE method, logical operators)*/
+
+1.CREATE DATABASE :-
+> use SG										
+
+
+
+2.CREATE AND INSERT COLLECTION :-
+> db.TECO.insert({'code':31241,'course':'toc','credit':3,'sem':'first','total':100})	
+
+> db.TECO.insert([{'code':31242,'course':'dbms','credit':3,'sem':'first','total':100},{'code':31243,'course':'sepm','credit':3,'sem':'first','total':100}])
+	
+> db.TECO.insert([{'code':31247,'course':'dbmsl','credit':2,'sem':'first','total':75},{'code':31248,'course':'cnl','credit':1,'sem':'first','total':75}])
+
+> db.TECO.insert({'code':31250,'course':'daa','credit':4,'sem':'second','total':100})
+
+> db.TECO.insert([{'code':31251,'course':'spos','credit':4,'sem':'second','total':100},{'code':31254,'course':'web tech','credit':3,'sem':'second','total':100}])
+
+3.QUERY OPERATION :-
+ > db.TECO.find().pretty()
+
+
+
+4.QUERY OPERATION USING CONDITIONAL OPERATORS :-
+1.Less than :
+> db.TECO.find({'credit':{$lt:3}}).pretty()
+
+4.2.Greater than equal to :
+> db.TECO.find({'credit':{$gte:3}}).pretty()
+
+4.3.Equal to :
+> db.TECO.find({'sem':'first'}).pretty()
+
+5.Query with LOGICAL OPERATORS :-
+5.1.AND operator :
+> db.TECO.find({$and:[{'sem':'first'},{'total':100}]}).pretty()
+
+5.2.OR oprator :
+> db.TECO.find({$or:[{'sem':'first'},{'total':100}]}).pretty()
+
+
+6.UPDATE DOCUMENT :-
+> db.TECO.update({'course':'web tech'},{$set:{'course':'wt'}})
+> db.TECO.find().pretty()
+
+
+7.Save() METHOD :-
+> db.TECO.save({'_id':ObjectId("59a7c77065f4aa96f736d832"),'title':'sposl','sem':'second','credit':2})
+> db.TECO.find().pretty()
+
+8. DELETE THE DOCUMENT :-
+> db.TECO.remove({'title':'sposl'})
+> db.TECO.find().pretty()
+

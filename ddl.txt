@@ -1,0 +1,110 @@
+/*Problem Statement :- Design and Develop SQL DDL statements which demonstrate the use of SQL objects such as Table, View, Index, Sequence, Synonym*/
+
+1. DDL COMMANDS ON DATABASE OBJECT : TABLE
+1.1. Creating Table :-
+> create database prac1;
+> use prac1;
+> create table Employee(
+Emp_no integer(3),
+Emp_name varchar(20),
+Joining_date date,
+Salary integer(6)
+);
+
+> create table newEmployee1 
+as
+select Emp_no,Emp_name from Employee;
+
+1.2 Modifying Table :-
+
+1]Adding new column in table :
+> alter table Employee 
+add Department varchar(15);
+
+2]Dropping column from table :
+> alter table Employee
+drop
+column Department ;
+
+3]Modifying column of a table :
+> alter table Employee
+modify column
+Emp_no varchar(4);
+
+1.3 Renaming Table :-
+> rename table Employee to EmpTable;
+
+1.4 Drop Table :-
+> show tables;
+> drop table newEmployee1;
+> show tables;
+
+2. DDL COMMANDS ON DATABASE OBJECT : VIEW
+> create table Student (
+roll_no integer(3),
+stud_name varchar(20),
+DOB date,
+marks integer(3)
+);
+
+> insert into Student values(101,'Kunal','2000-12-02',90),(102,'Ketan','1999-08-07',45);
+> insert into Student values(103,'Jay','1999-02-02',80),(104,'Radhika','1998-06-04',65),(105,'Sagar','1999-11-08',67);
+
+> select *from Student;
+
+2.1. Creating View :-
+> create view stud_view
+as select *from Student;
+
+> select *from stud_view;
+> create view stud_view1 as select roll_no,stud_name from Student;
+
+> select *from stud_view1;
+
+> create view stud_view2 as select *from Student where marks>80;
+
+> select *from stud_view2;
+
+2.2 Updating View :-
+> update stud_view1  set stud_name='Jayashree' where roll_no=103;
+> select *from stud_view1;
+
+2.3. Dropping view :-
+> show tables;
+
+> drop view stud_view2;
+> show tables;
+
+3. DDL COMMANDS ON DATABASE OBJECT : INDEX
+3.1 Creating index :-
+1]Single column index :
+> create index ind_stud on Student(stud_name);
+
+2]Composite Index :
+> create index ind_stud1 on Student(stud_name,marks);
+
+3]Unique index :
+> create unique index ind_stud2 on Student(stud_name);
+
+3.2 Displaying Index :-
+> show index from Student;
+
+
+3.3 Dropping Index :-
+> drop index ind_stud2 on Student;
+
+4. DDL COMMANDS ON DATABASE OBJECT : SEQUENCE
+Creating Sequence :
+> create table customer(
+custno integer(3) auto_increment,
+primary key(custno),
+cust_name varchar(15),
+address varchar(20)
+);
+
+> insert into customer values(101,'Kunal','Nashik');
+
+> insert into customer(cust_name,address) values('Gaurav','Surat'),('Gayatri','Dhule');
+
+> select *from customer;
+

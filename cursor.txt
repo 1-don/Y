@@ -1,0 +1,49 @@
+Write PL/SQL block of code which implements concept of cursor.
+
+1. old_stud_list table 
+Creating table old_stud_list
+create table old_stud_list(rollno int primary key ,name varchar(20),Address varchar(30));
+Inserting record into table
+insert into old_stud_list values(1,'megha','pune');
+insert into old_stud_list values(2,'mohan','dhule');
+insert into old_stud_list values(3,'nita','dhule');
+Retriving data from table
+Query: select *from old_stud_list;
+
+2. new_stud_list table
+Creating table new_stud_list
+create table new_stud_list(rollno int primary key,name varchar(20),Address varchar(30));
+
+Inserting record into table
+insert into new_stud_list values(3,'nita','dhule'); 
+insert into new_stud_list values(4,'vikas','mumbai'); 
+insert into new_stud_list values(5,'sachin','pune');
+Retriving data from table
+QUERY: select *from new_stud_list;
+
+3. PL/SQL BLOCK
+QUERY:
+DECLARE
+    rollno new_stud_list.rollno%type;
+    name new_stud_list.name%type;
+    address new_stud_list.address%type;
+    CURSOR C_stud IS 
+          select rollno,name,address FROM new_stud_list where rollno not in(select rollno from old_stud_list);
+BEGIN
+    OPEN C_stud;
+    LOOP
+      fetch C_stud into rollno,name,address;    
+        EXIT WHEN C_stud%NOTFOUND;   
+           dbms_output.put_line(rollno || ' ' || name || ' ' || address);
+           insert into old_stud_list values(rollno,name,address);
+     END LOOP;
+   CLOSE C_stud;  
+END;
+
+4.Tables after query	
+QUERY: select *from old_stud_list;
+
+
+QUERY: select *from new_stud_list;
+
+

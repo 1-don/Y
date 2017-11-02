@@ -1,0 +1,40 @@
+/*Problem Statement :- Design and Implement any 5 queries using MongoDB*/
+
+1.DISPLAY DOCUMENTS IN COLLECTIO "TECO" :-
+> use SG
+
+> db.TECO.insert({'code':31241,'course':'toc','credit':3,'sem':'first','total':100})	
+
+> db.TECO.insert([{'code':31242,'course':'dbms','credit':3,'sem':'first','total':100},{'code':31243,'course':'sepm','credit':3,'sem':'first','total':100}])
+	
+> db.TECO.insert([{'code':31247,'course':'dbmsl','credit':2,'sem':'first','total':75},{'code':31248,'course':'cnl','credit':1,'sem':'first','total':75}])
+
+> db.TECO.insert({'code':31250,'course':'daa','credit':4,'sem':'second','total':100})
+
+> db.TECO.insert([{'code':31251,'course':'spos','credit':4,'sem':'second','total':100},{'code':31254,'course':'web tech','credit':3,'sem':'second','total':100}])
+
+> db.TECO.find().pretty()
+
+
+2. Remove a field from Documents :-
+> db.TECO.update({},{$unset:{total:1}},{multi:true})
+> db.TECO.find().pretty()
+
+3.PROJECTION in MongoDB :-
+> db.TECO.find({},{'course':1})
+> db.TECO.find({},{'course':1,_id:0})
+
+
+4.limit() Method :-
+> db.TECO.find().limit(5)	
+> db.TECO.find().pretty().limit(3)
+
+5.skip() Method :-
+> db.TECO.find().pretty().limit(4).skip(2)
+> db.TECO.find().limit(4).skip(4)
+
+6.SORT() Method :-
+> db.TECO.find({},{_id:0}).sort({'code':-1})
+> db.TECO.find({},{_id:0}).sort({'credit':1})
+> db.TECO.find({},{'course':1,_id:0}).sort({'course':1})
+

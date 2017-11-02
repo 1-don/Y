@@ -1,0 +1,51 @@
+/*Problem Statement :- Implement aggregation and indexing with suitable example using MongoDB.*/
+
+
+1. AGGREGATION IN MongoDB :-
+> use SG
+> db.TECO.insert({'code':31241,'course':'toc','credit':3,'sem':'first','total':100})	
+
+> db.TECO.insert([{'code':31242,'course':'dbms','credit':3,'sem':'first','total':100},{'code':31243,'course':'sepm','credit':3,'sem':'first','total':100}])
+	
+> db.TECO.insert([{'code':31247,'course':'dbmsl','credit':2,'sem':'first','total':75},{'code':31248,'course':'cnl','credit':1,'sem':'first','total':75}])
+
+> db.TECO.insert({'code':31250,'course':'daa','credit':4,'sem':'second','total':100})
+
+> db.TECO.insert([{'code':31251,'course':'spos','credit':4,'sem':'second','total':100},{'code':31254,'course':'web tech','credit':3,'sem':'second','total':100}])
+
+> db.TECO.find().pretty()
+
+1] SUM :
+> db.TECO.aggregate([{$group:{_id:'$sem',num_course:{$sum:1}}}])
+> db.TECO.aggregate([{$group:{_id:'$sem',num_course:{$sum:'$total'}}}])
+
+2]AVERAGE :
+> db.TECO.aggregate([{$group:{_id:'$sem',num_course:{$avg:'$total'}}}])
+
+3] MINIMUM :
+> db.TECO.aggregate([{$group:{_id:'$sem',num_course:{$min:'$total'}}}])
+> db.TECO.aggregate([{$group:{_id:'$sem',num_course:{$min:'$credit'}}}])
+
+4] MAXIMUM :
+> db.TECO.aggregate([{$group:{_id:'$sem',num_course:{$max:'$credit'}}}])
+
+
+2.INDEXING in MongoDB :-
+QUERY : > use SG
+
+> db.TECO.insert([{'code':31241,'course':'toc','credit':3,'sem':'first','total':100},{'code':31242,'course':'dbms','credit':3,'sem':'first','total':100}])
+
+> db.TECO.insert([{'code':31243,'course':'sepm','credit':3,'sem':'first','total':100},{'code':31247,'course':'dbmsl','credit':2,'sem':'first','total':75}])
+> db.TECO.insert([{'code':31250,'course':'daa','credit':4,'sem':'second','total':100},{'code':31248,'course':'cnl','credit':1,'sem':'first','total':75}])
+> db.TECO.insert([{'code':31254,'course':'wt','credit':3,'sem':'second','total':100},{'code':31256,'course':'wtl','credit':1,'sem':'second','total':75}])
+
+2.1.CREATE INDEX :
+> db.TECO.createIndex({code:1})
+> db.TECO.createIndex({code:1,course:1})
+
+2.2.SHOW INDEX :
+> db.TECO.getIndexes()
+
+2.3.DROP INDEX :
+> db.TECO.dropIndex({code:1})
+> db.TECO.getIndexes()
